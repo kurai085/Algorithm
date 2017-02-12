@@ -11,18 +11,45 @@
 
 template<typename T>
 queue<T>::queue()
+:limitCount(0)
+,curCount(0)
+,headNode(0)
+,tailNode(0)
 {
     
+}
+
+template<typename T>
+queue<T>::queue(int size)
+:limitCount(size)
+{
+    
+}
+
+template<typename T>
+queue<T>::~queue()
+{
+    queue_node_t* node =0;
+    while(curCount <= 0)
+    {
+        node = headNode->next;
+        free(headNode);
+        if(node == 0)
+            break;
+    }
 }
 
 template<typename T>
 T queue<T>::dequeue()
 {
     T rslt = headNode->node;
+    queue_node_t* nextNode = headNode->next;
     
-    if(headNode->next != NULL)
+    free(headNode);
+    
+    if(nextNode != NULL)
     {
-        headNode = headNode->next;
+        headNode =nextNode;
     }
     
     curCount--;
